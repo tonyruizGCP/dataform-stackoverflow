@@ -1,7 +1,54 @@
 config {
-  type: "declaration",
-  database: "dataform-dogfood-shared",
-  schema: "stackoverflow",
+  hasOutput: true,
+  schema: "sources",
   name: "posts_questions",
   description: "raw posts_questions table"
 }
+CREATE OR REPLACE TABLE ${self()}
+(
+    id	 INT64,	 	
+    load_date DATE,  		
+    title	STRING,	 		
+    body	STRING,	 		
+    accepted_answer_id	 INT64,	 		
+    answer_count	 INT64,	 		
+    comment_count	 INT64	, 		
+    community_owned_date	DATE	, 		
+    creation_date	DATE,	 		
+    favorite_count	 INT64	, 		
+    last_activity_date	DATE,	 		
+    last_edit_date	DATE	, 		
+    last_editor_display_name	STRING	, 		
+    last_editor_user_id	 INT64	, 		
+    owner_display_name	STRING,	 		
+    owner_user_id	 INT64	, 		
+    parent_id	STRING,	 		
+    post_type_id	 INT64	 	,	
+    score	 INT64	 		
+) 
+options(
+    labels=[("stackoverflow", "")]
+) AS 
+SELECT 
+
+    id,	 
+    CURRENT_DATE() as load_date,
+    title	,	
+    body,
+    accepted_answer_id,	 		
+    answer_count,		
+    comment_count	, 	
+    community_owned_date	 ,		
+    creation_date		, 		
+    favorite_count,			
+    last_activity_date 	,	
+    last_edit_date, 		
+    last_editor_display_name	,	
+    last_editor_user_id	, 		
+    owner_display_name,		 		
+    owner_user_id,	 		
+    parent_id	,	
+    post_type_id	, 		
+    score	
+
+    FROM  bigquery-public-data.stackoverflow.posts_questions; 	 

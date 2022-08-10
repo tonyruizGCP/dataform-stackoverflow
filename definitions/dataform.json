@@ -1,0 +1,6 @@
+{
+    "defaultSchema": "stackoverflow",
+    "warehouse": "bigquery",
+    "defaultDatabase": "dataform-demo-stackoverflow",
+    "defaultLocation": "US"
+}

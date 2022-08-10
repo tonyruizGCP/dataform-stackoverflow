@@ -1,7 +1,30 @@
 config {
-  type: "declaration",
-  database: "dataform-dogfood-shared",
-  schema: "stackoverflow",
-  name: "badges",
-  description: "raw badges table"
+    hasOutput: true,
+
+    schema: "sources",
+    name: "badges",
+    description: "raw badges table"
 }
+CREATE OR REPLACE TABLE ${self()}
+(
+id INT64 ,
+load_date DATE,
+name STRING,
+date DATE ,
+user_id INT64,
+class INT64,
+tag_based BOOLEAN 
+)
+options(
+    labels=[("stackoverflow", "")]
+)
+ AS 
+SELECT
+    id , 
+    CURRENT_DATE() as load_date,
+    name,
+    date, 
+    user_id
+    class,
+    tag_based
+FROM  bigquery-public-data.stackoverflow.badges;

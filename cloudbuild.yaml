@@ -1,0 +1,38 @@
+steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+        - "-c"
+        - |
+          gcloud deployment-manager deployments describe ${PROJECT_ID}
+          if [[ "$?" == "0" ]]
+          then
+            echo "Updating"
+            gcloud deployment-manager deployments update ${PROJECT_ID} --template bigquery.jinja
+          elif [[ "$?" == "1" ]]
+          then
+            gcloud deployment-manager deployments create ${PROJECT_ID} --template bigquery.jinja
+          fi
+    env:
+        - PROJECT_ID=${PROJECT_ID}
+  
+  
+  - name: 'dataformco/dataform'
+    entrypoint: 'bash'
+    args:
+       - "deploy.sh"
+    env:
+        - PROJECT_ID=${PROJECT_ID}
+        - BQ_LOCATION=${_BQ_LOCATION}
+        - BRANCH_NAME=${BRANCH_NAME}
+        - SHORT_SHA=${SHORT_SHA}
+        - _JS_BUCKET=${_JS_BUCKET}
+        - _PR_NUMBER=${_PR_NUMBER}
+        - DATAFORM_ACTIONS=${_DATAFORM_ACTIONS}
+        - DATAFORM_TAGS=${_DATAFORM_TAGS}
+    dir: 'definitions'
+
+options:
+    logging: CLOUD_LOGGING_ONLY
+  
+  

@@ -1,0 +1,10 @@
+{% set DATASET = (env["deployment"])|replace("-","_") %}
+{% set TABLE = (env["deployment"] + "table")|replace("-","_") %}
+
+resources:
+- name: {{ DATASET }}
+## type: bigquery.v2.dataset
+  type: gcp-types/bigquery-v2:datasets
+  properties:
+    datasetReference:
+      datasetId: {{ DATASET }}

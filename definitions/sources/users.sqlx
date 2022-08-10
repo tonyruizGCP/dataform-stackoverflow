@@ -1,7 +1,42 @@
 config {
-  type: "declaration",
-  database: "dataform-dogfood-shared",
-  schema: "stackoverflow",
+hasOutput: true,
+schema: "sources",
   name: "users",
   description: "raw users table"
 }
+CREATE OR REPLACE TABLE ${self()}
+(
+    id	 INT64	,
+    load_date DATE,  		
+    display_name	STRING	, 		
+    about_me	STRING,	 		
+    age	STRING	, 		
+    creation_date	DATE	 ,		
+    last_access_date	DATE	, 		
+    location	STRING,	 		
+    reputation	 INT64	 ,		
+    up_votes	 INT64	 ,		
+    down_votes	 INT64	 ,		
+    views	 INT64	 ,		
+    profile_image_url	STRING	 ,		
+    website_url	STRING	 		
+) 
+options(
+    labels=[("stackoverflow", "")]
+) AS 
+
+SELECT 
+    id		,
+    CURRENT_DATE() as  load_date ,  		
+    display_name		, 		
+    about_me	,	 		
+    age		, 		
+    creation_date		 ,		
+    last_access_date		, 		
+    location	,	 		
+    reputation	 	 ,		
+    up_votes	 	 ,		
+    down_votes	 	 ,		
+    views	 	 ,		
+    profile_image_url		 ,		
+    website_url		 
