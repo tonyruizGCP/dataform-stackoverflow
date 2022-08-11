@@ -7,7 +7,7 @@ config {
 CREATE OR REPLACE TABLE ${self()}
 (
     id	 INT64 ,
-    load_date DATE,	 		
+    load_date TIMESTAMP,	 		
     title	STRING ,	 		
     body	STRING ,		
     accepted_answer_id	STRING ,	 		
@@ -33,7 +33,7 @@ options(
 ) AS 
 select 
     id	  ,
-    CURRENT_DATE() as load_date,
+    CURRENT_TIMESTAMP() as load_date,
     title	 ,	 		
     body	 ,		
     accepted_answer_id ,	 		

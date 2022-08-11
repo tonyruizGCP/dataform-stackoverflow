@@ -7,7 +7,7 @@ schema: "sources",
 CREATE OR REPLACE TABLE ${self()}
 (
     id	 INT64	,
-    load_date DATE,  		
+    load_date TIMESTAMP,  		
     display_name	STRING	, 		
     about_me	STRING,	 		
     age	STRING	, 		
@@ -27,7 +27,7 @@ options(
 
 SELECT 
     id		,
-    CURRENT_DATE() as  load_date ,  		
+    CURRENT_TIMESTAMP() as  load_date ,  		
     display_name		, 		
     about_me	,	 		
     age		, 		
