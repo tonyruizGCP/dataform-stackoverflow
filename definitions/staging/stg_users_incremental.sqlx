@@ -1,0 +1,67 @@
+config {
+  type: "incremental"
+}
+
+pre_operations {
+  DECLARE latest_load_date DEFAULT (
+    ${when(incremental(),
+    `SELECT MAX(load_date) FROM ${ self() }`,
+    `SELECT DATE("1000-01-01")`)}
+  )
+}
+
+${when(incremental(),
+  /******************************************
+   INCREMENTAL SQL
+   Default when executing:
+     
+     dataform run \
+       --actions stg_users_incremental
+  ******************************************/
+  `
+  SELECT
+  id as user_id,
+  load_date,
+  age,
+  creation_date,
+  round(timestamp_diff(current_timestamp(), creation_date, day)/365) as user_tenure
+  FROM ${ref("users")}
+  WHERE
+    load_date > latest_load_date
+  `,
+  when(dataform.projectConfig.vars.updateSchema,
+  /**********************************************
+   SCHEMA CHANGE SQL
+   Execute by running:
+     
+     dataform run \
+       --actions stg_users_incremental \
+       --full-refresh \
+       --vars=updateSchema=true
+  **********************************************/
+  `
+  SELECT
+   id as user_id,
+   load_date,
+    age,
+    creation_date,
+     round(timestamp_diff(current_timestamp(), creation_date, day)/365) as user_tenure
+  FROM ${self()}
+  `,
+  /*********************************************
+   BULK LOAD SQL
+   Execute by running:
+     
+     dataform run \
+       --actions stg_users_incremental \
+       --full-refresh
+  *********************************************/
+  `
+  SELECT
+  id as user_id,
+  load_date,
+  age,
+  creation_date,
+  round(timestamp_diff(current_timestamp(), creation_date, day)/365) as user_tenure
+  FROM ${ref("users")}
+  `))}
