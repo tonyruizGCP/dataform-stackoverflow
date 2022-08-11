@@ -10,7 +10,7 @@ CREATE OR REPLACE TABLE ${self()}
 id INT64 ,
 load_date DATE,
 name STRING,
-date DATE ,
+date timestamp ,
 user_id INT64,
 class INT64,
 tag_based BOOLEAN 
@@ -24,7 +24,8 @@ SELECT
     CURRENT_DATE() as load_date,
     name,
     date, 
-    user_id
+    user_id,
     class,
     tag_based
-FROM  bigquery-public-data.stackoverflow.badges;
+FROM  bigquery-public-data.stackoverflow.badges
+where date >= timestamp("2022-01-01")

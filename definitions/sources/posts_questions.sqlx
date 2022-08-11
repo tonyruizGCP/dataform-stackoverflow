@@ -13,11 +13,11 @@ CREATE OR REPLACE TABLE ${self()}
     accepted_answer_id	 INT64,	 		
     answer_count	 INT64,	 		
     comment_count	 INT64	, 		
-    community_owned_date	DATE	, 		
-    creation_date	DATE,	 		
+    community_owned_date	TIMESTAMP	, 		
+    creation_date	TIMESTAMP,	 		
     favorite_count	 INT64	, 		
-    last_activity_date	DATE,	 		
-    last_edit_date	DATE	, 		
+    last_activity_date	TIMESTAMP,	 		
+    last_edit_date	TIMESTAMP	, 		
     last_editor_display_name	STRING	, 		
     last_editor_user_id	 INT64	, 		
     owner_display_name	STRING,	 		
@@ -51,4 +51,5 @@ SELECT
     post_type_id	, 		
     score	
 
-    FROM  bigquery-public-data.stackoverflow.posts_questions; 	 
+    FROM  bigquery-public-data.stackoverflow.posts_questions
+    where creation_date > timestamp("2022-01-01"); 	 

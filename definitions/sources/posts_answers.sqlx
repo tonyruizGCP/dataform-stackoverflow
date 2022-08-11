@@ -54,4 +54,5 @@ select
     tags,	 		
     view_count
 
-FROM  bigquery-public-data.stackoverflow.posts_answers ;
+FROM  bigquery-public-data.stackoverflow.posts_answers 
+where creation_date > timestamp("2022-01-01");
