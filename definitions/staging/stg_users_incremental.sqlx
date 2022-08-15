@@ -1,6 +1,12 @@
 config {
   type: "incremental",
   schema: "staging",
+   uniqueKey: ["user_id"],
+  bigquery: {
+    partitionBy: "TIMESTAMP(load_date)",
+    updatePartitionFilter:
+        "load_date >= timestamp_sub(current_timestamp(), interval 1 hour)"
+  }
   description: "Cleaned version of stackoverflow.users table with incremental loading"
 }
 
