@@ -1,5 +1,5 @@
 config {
-  type: "incremental"
+  type: "incremental",
   schema: "staging",
   description: "Cleaned version of stackoverflow.users table with incremental loading"
 }
