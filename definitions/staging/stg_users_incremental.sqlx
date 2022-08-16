@@ -2,6 +2,7 @@ config {
   type: "incremental",
   schema: "staging",
    uniqueKey: ["user_id"],
+    tags: ["daily"],
   bigquery: {
     partitionBy: "DATE(load_date)",
     updatePartitionFilter:
