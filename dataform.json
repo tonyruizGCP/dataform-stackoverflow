@@ -3,4 +3,5 @@
     "warehouse": "bigquery",
     "defaultDatabase": "qwiklabs-gcp-03-c73112dd6516",
     "defaultLocation": "US"
+    
 }
